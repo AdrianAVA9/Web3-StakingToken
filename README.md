@@ -19,3 +19,9 @@ For the development of this project, we used the following patterns:
 2. ReentrancyGuard: The nonReentrant modifier is applied to the stake, unstake, and claimReward functions to prevent nested calls to these functions, protecting the contract from reentrancy attacks.
 
 3. Pausable: To safeguard staked funds in the event that a vulnerability is identified.
+
+###Team members:
+
+[Efraín González Bermúdez](https://github.com/efraingb)
+[Fabiola Bloise Chacón](https://github.com/fabsbloise)
+[Adrián Vega](https://github.com/AdrianAVA9)
