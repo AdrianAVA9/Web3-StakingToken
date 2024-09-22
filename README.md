@@ -20,8 +20,8 @@ For the development of this project, we used the following patterns:
 
 3. Pausable: To safeguard staked funds in the event that a vulnerability is identified.
 
-###Team members:
+### Team members:
 
-[Efraín González Bermúdez](https://github.com/efraingb)
-[Fabiola Bloise Chacón](https://github.com/fabsbloise)
-[Adrián Vega](https://github.com/AdrianAVA9)
+[Efraín González Bermúdez](https://github.com/efraingb)  
+[Fabiola Bloise Chacón](https://github.com/fabsbloise)  
+[Adrián Vega](https://github.com/AdrianAVA9)  
