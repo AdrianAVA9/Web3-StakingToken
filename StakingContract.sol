@@ -4,8 +4,9 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-contract StakingContract is Ownable, Pausable {
+contract StakingContract is Ownable, Pausable, ReentrancyGuard {
     IERC20 public stakingToken;
 
     struct Stake {
@@ -27,7 +28,7 @@ contract StakingContract is Ownable, Pausable {
         rewardRate = _rewardRate;
     }
 
-    function stake(uint256 _amount) external {
+    function stake(uint256 _amount) external nonReentrant {
         require(_amount > 0, "Amount must be greater than 0");
         
         // Transfer tokens del usuario al contrato
@@ -41,7 +42,7 @@ contract StakingContract is Ownable, Pausable {
         emit Staked(msg.sender, _amount);
     }
 
-    function unstake(uint256 _amount) external whenNotPaused {
+    function unstake(uint256 _amount) external whenNotPaused nonReentrant {
         require(stakes[msg.sender].amount >= _amount, "Insufficient staked amount");
         
         // Actualiza el total staked
@@ -69,7 +70,7 @@ contract StakingContract is Ownable, Pausable {
         return block.timestamp;
     }
 
-    function claimReward() external whenNotPaused  {
+    function claimReward() external whenNotPaused nonReentrant {
         uint256 reward = calculateReward(msg.sender);
         require(reward > 0, "No rewards available");
 
