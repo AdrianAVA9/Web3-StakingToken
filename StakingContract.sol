@@ -17,6 +17,11 @@ contract StakingContract is Ownable, Pausable {
     uint public rewardRate;// Recompensa por segundo
     uint public totalStaked;
 
+    //Events
+    event Staked(address indexed user, uint256 amount);
+    event Unstaked(address indexed user, uint256 amount);
+    event RewardClaimed(address indexed user, uint256 reward);
+
     constructor(IERC20 _stakingToken, uint256 _rewardRate) Ownable (msg.sender) {
         stakingToken = _stakingToken;
         rewardRate = _rewardRate;
@@ -32,6 +37,8 @@ contract StakingContract is Ownable, Pausable {
         stakes[msg.sender].amount += _amount;
         stakes[msg.sender].timestamp = block.timestamp;
         totalStaked += _amount;
+
+        emit Staked(msg.sender, _amount);
     }
 
     function unstake(uint256 _amount) external whenNotPaused {
@@ -43,6 +50,8 @@ contract StakingContract is Ownable, Pausable {
 
         // Transfiere los tokens de vuelta al usuario
         stakingToken.transfer(msg.sender, _amount);
+
+        emit Unstaked(msg.sender, _amount);
     }
 
     function calculateReward(address _user) public view returns (uint256) {
@@ -69,6 +78,8 @@ contract StakingContract is Ownable, Pausable {
 
         // Actualiza el timestamp después de reclamar recompensas
         stakes[msg.sender].timestamp = block.timestamp;
+
+        emit RewardClaimed(msg.sender, reward);
     }
 
     function setRewardRate(uint256 _newRate) external onlyOwner {
